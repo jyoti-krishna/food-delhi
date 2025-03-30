@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 const Sidebar = () => {
   return (
-    <div className='flex flex-col items-start w-64 h-maxHeight: 100%, pt-20 pl-10 gap-10 border-gray-800 border-r-4'>
+    <div className='flex flex-col items-start w-64 h-100vh pt-20 pl-10 gap-10 border-gray-800 border-r-4'>
       <NavLink to='/add' className='flex flex-row gap-4 items-center font-semibold w-[100%] border-gray-800 border-4 border-r-0 p-4 cursor-pointer active:bg-orange-100 focus:border-orange-600 focus:bg-orange-100'>
        <img src={assets.add_icon} className='w-11 border-gray-900 border-[3px] rounded-[50%]'/>
        <span>Add items</span>

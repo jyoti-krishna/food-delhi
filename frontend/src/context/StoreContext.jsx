@@ -38,6 +38,12 @@ export const StoreProvider = (props) => {
       await axios.post(url+"/api/cart/remove",{"itemId":id},{headers:{token}});
     }
   };
+  const removeAllItems = async() => {
+    setCartItems({});
+    if(token){
+      await axios.post(url+"/api/cart/removeall",{},{headers:{token}});
+    }
+  }
   const loadCartData = async(token) =>{
     const res = await axios.post(url+"/api/cart/get",{},{headers:{token}});
     if(res.data.success)
@@ -46,8 +52,7 @@ export const StoreProvider = (props) => {
       console.log(res.data.message);
   }
   const subTotal = () => {
-    let total = 0;    
-    console.log(cartItems);  
+    let total = 0;     
     for (const item in cartItems)
       if (cartItems[item]) total += food_list.find(i=>i._id===item).price * cartItems[item];
     return total;
@@ -56,6 +61,7 @@ export const StoreProvider = (props) => {
     food_list,
     addItems,
     removeItems,
+    removeAllItems,
     cartItems,
     setCartItems,
     subTotal,

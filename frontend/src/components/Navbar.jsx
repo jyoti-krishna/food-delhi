@@ -28,18 +28,21 @@ const Navbar = ({ setIsLogin }) => {
           <a
             href="#menu"
             className="hover:border-b-2 pb-2 border-b-orange-500 cursor-pointer"
+            onClick={()=>navigate('/')}
           >
             Menu
           </a>
           <a
             href="#mobile-app"
             className="hover:border-b-2 pb-2 border-b-orange-500 cursor-pointer"
+            onClick={()=>navigate('/')}
           >
             Mobile-app
           </a>
           <a
             href="#contact"
             className="hover:border-b-2 pb-2 border-b-orange-500 cursor-pointer"
+            onClick={()=>navigate('/')}
           >
             Contact Us
           </a>

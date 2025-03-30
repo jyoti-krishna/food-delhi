@@ -1,10 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect,useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import { Button, Input } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 const Cart = () => {
-  const { url, food_list, addItems, removeItems, cartItems, subTotal } =
+  const { url, food_list, addItems, removeItems, cartItems, subTotal, token } =
     useContext(StoreContext);
+  const [userOrders,setUserOrders]=useState([]);
+  const fetchOrder = async() => {
+    const res=await axios.get(`${url}/api/order/getuserorders`,{headers:{token}});
+    console.log(res.data,"hi");
+    
+    if(res.data.success){
+      setUserOrders(res.data.data);
+    }
+    else toast.error('Error');
+}
+useEffect(()=>{
+  fetchOrder();
+},[])
+  
   const deliveryFee = 2;
   const subTotalFee = subTotal();
   const navigate = useNavigate();
@@ -119,6 +134,33 @@ const Cart = () => {
             </div>
           </div>
         </div>
+          <div className="pt-[50px]">
+          <h1 className="text-[28px] text-neutral-700 font-bold">All orders</h1>
+          <hr className="border-gray-400 border-t-4 border-b-0 my-4 pb-4" />
+                {userOrders.length===0 ? <p className=" text-[28px] text-neutral-700 font-semibold flex flex-col justify-center items-center pb-10">No Orders Yet!!</p>:
+                <div>{
+                  userOrders.map((item,index)=>{
+                    return (<div key={index} className={`grid grid-rows text-gray-600 gap-2 mt-8 p-4 items-center ${item.status === "pending" ? 'bg-blue-100' : item.status === "accepted"?'bg-green-200':'bg-red-200'} rounded-lg shadow-xl`}>
+                      
+                      <div>
+                        {
+                          item.items.map((item,index)=>{
+                            return (
+                              <div key={index} className='flex flex-row gap-4 items-center'>
+                                <span  className='font-semibold text-[18px]'>{item.quantity} X {item.name} ({item.category})</span>
+                              </div>
+                            )
+                          })
+                        }
+                      </div>
+                      <span className='font-semibold text-[18px]'>${item.amount}</span>
+                      <span className='font-semibold text-[18px]'>ADDRESS: {item.address.city},{item.address.address}</span>
+                      <span  className='font-bold text-[18px]'>STATUS: {item.status}</span>
+                    </div>)
+                  })
+                }</div>
+                }
+          </div>
       </div>
     </>
   );
