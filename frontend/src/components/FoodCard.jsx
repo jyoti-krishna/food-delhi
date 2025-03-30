@@ -3,11 +3,11 @@ import { assets } from "../assets/assets";
 import { StoreContext } from "../context/StoreContext";
 
 export const FoodCard = ({ foodprop }) => {
-  const { cartItems, addItems, removeItems } = useContext(StoreContext);
+  const { url, cartItems, addItems, removeItems, } = useContext(StoreContext);
   return (
     <div className="bg-[#f4cd8c7a] backdrop-blur-md shadow-lg rounded-3xl overflow-hidden p-1 animate-fade flex flex-col justify-between">
       <img
-        src={foodprop.image}
+        src={url+"/images/"+foodprop.image}
         alt={foodprop.name}
         className="w-full h-64 object-cover object-center rounded-3xl"
       ></img>
